@@ -44,7 +44,7 @@ group :development, :test do
 
   # Testing frameworks
   gem 'rspec-rails' # testing framework
-  gem 'factory_girl_rails' # use factories, not fixtures
+  gem 'factory_bot_rails' # use factories, not fixtures
   gem 'fakeweb'
 
   # Automated testing
