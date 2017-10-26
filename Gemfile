@@ -74,3 +74,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'execjs'
 gem 'twitter-bootstrap-rails'
 gem 'bootstrap-sass'
+gem 'shopify_api'
