@@ -51,6 +51,9 @@ class AccountsController < ApplicationController
     end
   end
 
+  def test_connection
+  end
+
   # DELETE /accounts/1
   # DELETE /accounts/1.json
   def destroy
