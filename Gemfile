@@ -45,7 +45,7 @@ group :development, :test do
   # Testing frameworks
   gem 'rspec-rails' # testing framework
   gem 'factory_bot_rails' # use factories, not fixtures
-  gem 'fakeweb'
+  gem 'fakeweb', git: 'https://github.com/chrisk/fakeweb.git'
 
   # Automated testing
   gem 'guard' # automated execution of test suite upon change

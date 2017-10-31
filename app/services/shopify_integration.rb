@@ -16,7 +16,7 @@ class ShopifyIntegration
     def connect
 
         # initialize the gem
-        ShopifyAPI::Session.setup({api_key: SHOPIFY_API_KEY, secret: SHOPIFY_SHARED_SECRET})
+        ShopifyAPI::Session.setup({api_key: :api_key, secret: :shared_secret})
 
         # Instantiate the session
         session = ShopifyAPI::Session.new(@url, @password)
@@ -66,7 +66,7 @@ class ShopifyIntegration
                     # If not already imported, create a new order
                     order = Order.new(number: shopify_order.name,
                             email: shopify_order.email,
-                            first_name: shopfiy_name: shopify_order.billing_address.first_name,
+                            first_name: shopify_order.billing_address.first_name,
                             last_name: shopify_order.billing_address.last_name,
                             shopify_order_id: shopify_order.id,
                             order_date: shopify_order.created_at,
@@ -133,8 +133,7 @@ class ShopifyIntegration
           # Otherwise, create it
           product = Product.new(last_shopify_sync: DateTime.now,
                                 name: shopify_product.title,
-                                shopify_product_id: shopify_product.id,
-                                account_id: @account_id
+                                shopify_product_id: 5
                                 )
           unless product.save
             failed += 1
