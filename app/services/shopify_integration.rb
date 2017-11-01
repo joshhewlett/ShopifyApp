@@ -133,7 +133,7 @@ class ShopifyIntegration
           # Otherwise, create it
           product = Product.new(last_shopify_sync: DateTime.now,
                                 name: shopify_product.title,
-                                shopify_product_id: 5
+                                shopify_product_id: shopify_product.id
                                 )
           unless product.save
             failed += 1
