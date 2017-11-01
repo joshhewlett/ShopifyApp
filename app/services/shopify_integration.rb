@@ -51,9 +51,20 @@ class ShopifyIntegration
         created = failed = 0
         page = 1
 
+        count = ShopifyAPI::Order.count
+        puts "COUNT: #{count}"
+
         # Get the first page of orders
         shopify_orders = ShopifyAPI::Order.find(:all, params: {limit: 50, page: page})
 
+        shopify_orders.each do |shopify_order|
+            shopify_order.each do |item|
+                puts "Shopify Order Item: #{item}"
+                item.line_items.each do |li|
+                    puts "Line item: #{li}"
+                end
+            end
+        end
         # Keep going while we have more orders to process
         while shopify_orders.size > 0
             shopify_orders.each do |shopify_order|
@@ -77,8 +88,8 @@ class ShopifyIntegration
 
                     # Iterate through the line_items
                     shopify_order.line_items.each do |line_item|
-                        variant = Variant.find_by_shopify_variant_id(line_item.varian_id)
-                        if variant.present?
+                        order_item = Variant.find_by_shopify_variant_id(line_item.variant_id)
+                        if order_item.present?
                             order.order_items.build(variant_id: variant.id,
                                                     shopify_product_id: line_item.product_id,
                                                     shopify_variant_id: line_item.id,

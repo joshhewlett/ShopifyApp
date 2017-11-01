@@ -68,7 +68,6 @@ class ProductsController < ApplicationController
   def import
     # For now, we'll just use the first account in the database
     @account = Account.first
-    puts "ACCOUNT: #{@account}"
 
     # Instantiate the ShopifyIntegration class
     shopify_integration = ShopifyIntegration.new(
