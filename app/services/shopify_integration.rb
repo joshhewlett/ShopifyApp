@@ -57,14 +57,6 @@ class ShopifyIntegration
         # Get the first page of orders
         shopify_orders = ShopifyAPI::Order.find(:all, params: {limit: 50, page: page})
 
-        shopify_orders.each do |shopify_order|
-            shopify_order.each do |item|
-                puts "Shopify Order Item: #{item}"
-                item.line_items.each do |li|
-                    puts "Line item: #{li}"
-                end
-            end
-        end
         # Keep going while we have more orders to process
         while shopify_orders.size > 0
             shopify_orders.each do |shopify_order|
@@ -77,20 +69,17 @@ class ShopifyIntegration
                     # If not already imported, create a new order
                     order = Order.new(number: shopify_order.name,
                             email: shopify_order.email,
-                            first_name: shopify_order.billing_address.first_name,
-                            last_name: shopify_order.billing_address.last_name,
                             shopify_order_id: shopify_order.id,
                             order_date: shopify_order.created_at,
                             total: shopify_order.total_price,
                             financial_status: shopify_order.financial_status,
-                            account_id: @account_id
                             )
 
                     # Iterate through the line_items
                     shopify_order.line_items.each do |line_item|
                         order_item = Variant.find_by_shopify_variant_id(line_item.variant_id)
                         if order_item.present?
-                            order.order_items.build(variant_id: variant.id,
+                            order.order_items.build(variant_id: line_item.variant_id,
                                                     shopify_product_id: line_item.product_id,
                                                     shopify_variant_id: line_item.id,
                                                     quantity: line_item.quantity,
